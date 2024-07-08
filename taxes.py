@@ -1,4 +1,5 @@
 import csv
+from prsi_func import prsi_rates
 
 
 def calcincome_tax(num: float, cutoff: float) -> float:
@@ -41,6 +42,7 @@ tax_credits = float(input("Please input the tax credits you are owed: "))
 
 usc = (round(recursive_usc(income), 2)) if income > 13000.0 else 0.0
 income_tax = 0
+prsi = 0
 # can't have negative tax_credits.
 if tax_credits < 0.0:
     tax_credits = 0
@@ -54,6 +56,10 @@ while insurance_class not in "abcdejhkmsp":
     if insurance_class.casefold() not in "1.2.3.4.":
         print("Error, choice not in the range. Please try again.")
 
+if insurance_class == 'p':
+    prsi = prsi_rates(insurance_class, income) + prsi_rates('s', income)
+else:
+    prsi = prsi_rates(insurance_class, income)
 status = "-"
 # we continuously check the status of the user, so that we can add this to the data.
 while status not in "1.2.3.4.":
