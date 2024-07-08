@@ -32,3 +32,5 @@ def prsi_rates(prsi_class: chr, income: float) -> float:
             return income * .001
         case 'm':
             return 0.0
+        case '_':
+            raise ValueError("Invalid class.")
