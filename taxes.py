@@ -1,11 +1,4 @@
-def calcprsi(num: int, bracket: chr)->int:
-    """
-    This function will check to calculate the user's PRSI rate
-    :param num: Total income
-    :param bracket: The group the user belongs to
-    :return: tax owed.
-    """
-    pass
+import csv
 
 
 def calcpaye(num:float, cutoff:float) -> float:
@@ -82,10 +75,42 @@ match status:
     case _:
         raise ValueError("Invalid status")
 
-tax_credits = float(input("Please input the tax credits you are owed."))
-print(f"Gross pay (before tax): {income}")
+tax_credits = float(input("Please input the tax credits you are owed: "))
+
+# can't have negative tax_credits.
+if tax_credits < 0.0:
+    tax_credits = 0
+
+total_tax = usc+paye
+net_tax = total_tax-tax_credits
+if net_tax < 0.0:
+    net_tax = 0.0 # we can't get negative tax... unless you did it wrong. we don't want to be wrong.
+
+net_pay = income - net_tax
+
+print(f"Gross pay (before tax): €{income}")
 print(f"USC total: €{usc}")
 print(f"PAYE total: €{paye}")
-print(f"Gross tax (before tax credit): {usc + paye}")
-print(f"Tax credits: {tax_credits}")
-print(f"Net tax: {usc+paye - tax_credits}")
+print(f"Gross tax (before tax credit): €{usc + paye}")
+print(f"Tax credits: €{tax_credits}")
+print(f"Net tax: €{usc+paye - tax_credits}")
+print(f"Net pay: €{round(income - net_tax, 2)}")
+
+
+# we turn the data above to a dict.
+tax_dict = {"Total Income" : f"€{income}",
+            "USC" : f"€{usc}",
+            "PAYE": f"€{paye}",
+            "Gross Tax": f"€{total_tax}",
+            "Tax Credits": f"€{tax_credits}",
+            "Net Tax": f"€{net_tax}",
+            "Net Pay": f"€{round(net_pay, 2)}"}
+
+filename = "tax_calculation.csv"
+
+with open(filename, 'w', newline='') as output_file:
+    writer = csv.writer(output_file)
+    for key, value in tax_dict.items():
+        writer.writerow([key, value])
+
+
