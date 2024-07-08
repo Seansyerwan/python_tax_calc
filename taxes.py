@@ -39,7 +39,7 @@ def recursive_usc(num:float) -> float:
 
 income = float(input("How much do you earn per annum? "))
 
-usc = (round(recursive_usc(income), 2))
+usc =  (round(recursive_usc(income), 2)) if income > 13000.0 else 0.0
 paye = 0;
 
 status = "-"
