@@ -30,5 +30,23 @@ def recursive_usc(num:float) -> int:
         return num2*.08 + recursive_usc(num-num2)
 
 
-print(round(recursive_usc(100000), 2))
+income = float(input("How much do you earn per annum? "))
+
+usc = (round(recursive_usc(income), 2))
+
+status = "-"
+
+while status not in "1.2.3.4.":
+
+    status = input("What is your relationship status?\n"
+                   "1. Single person\n"
+                   "2. Lone parent\n"
+                   "3. Married couple/civil partners, one income\n"
+                   "4. Married couple/civil partners, two incomes ")
+
+    if(status not in "1.2.3.4."):
+        print("Error, choice not in the range. Please try again.")
+
+print(f"USC total: €{usc}")
+
 
