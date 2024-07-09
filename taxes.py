@@ -51,9 +51,9 @@ insurance_class = '-'
 while insurance_class not in "abcdejhkmsp":
 
     insurance_class = input("What social insurance class are you in?\n"
-                            "a\nb\nc\nd\ne\nj\nh\nk\nm\ns\np").casefold()
+                            "a\nb\nc\nd\ne\nj\nh\nk\nm\ns\np ").casefold()
 
-    if insurance_class.casefold() not in "1.2.3.4.":
+    if insurance_class.casefold() not in "abcdejhkmsp":
         print("Error, choice not in the range. Please try again.")
 
 if insurance_class == 'p':
@@ -93,7 +93,7 @@ match status:
     case _:
         raise ValueError("Invalid status")
 
-total_tax = usc + income_tax
+total_tax = usc + income_tax + prsi
 net_tax = total_tax - tax_credits
 if net_tax < 0.0:
     net_tax = 0.0  # we can't get negative tax... unless you did it wrong. we don't want to be wrong.
@@ -112,6 +112,7 @@ print(f"Net pay: €{round(income - net_tax, 2)}")
 tax_dict = {"Total Income": f"€{income}",
             "USC": f"€{usc}",
             "Income tax": f"€{income_tax}",
+            "PRSI" : f"€{prsi}",
             "Gross Tax": f"€{total_tax}",
             "Tax Credits": f"€{tax_credits}",
             "Net Tax": f"€{net_tax}",
